@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>WeatherAPI</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('form').submit(function() {
+                    var city = $('#city').val();
+                    var url = "http://api.openweathermap.org/data/2.5/weather?q="+city+",uk&&appid=b5467f345aedbb9ef2f09b8d874a1f7f"// your code here (build up your url)
+                    $.get(url, function(res) {
+                        console.log(res.main.temp)// your code here
+                        console.log(res.name);
+                        var tempInFeirenheight = ((res.main.temp) * (9/5) - 459.67).toFixed(2);
+                        var name = res.name;
+                        var rain = res.weather;
+                        console.log(rain);
+                        var htmlString = "<h1>"+name+"</h1><p>Teprateure: "+tempInFeirenheight+"F&deg</p><p>Rain: "+rain+"</p>";
+                        $('.output').append(htmlString);
+                    }, 'json');
+                    // don't forget to return false so the page doesn't refresh
+                    return false;
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="form">
+                <form>
+                    <label for="city"></label>
+                    <input type="text" id="city" name="city">
+                    <input type="submit" id="submit" value="Search Weather">
+                </form>
+            </div>
+            <div class="output">
+
+            </div>
+        </div>
+    </body>
+</html>
